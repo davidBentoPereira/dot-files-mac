@@ -1,0 +1,59 @@
+#Aliases basic commands
+alias ls='ls -GFh'
+alias ll='ls -las'
+alias linuxv='lsb_release -a'
+
+#Aliases advanced commands
+# > mkshortcuts : Fix made to add all snapcrafts apps as shortcuts
+alias mkshortcuts='sudo cp /var/lib/snapd/desktop/applications/* /usr/share/applications'
+
+#Aliases paths commands
+alias ..='cd ..'
+alias ...='cd ../..'
+alias work='cd ~/Work'
+alias cdfree='cd ~/Work/freelancing'
+alias cdibridge='cd ~/Work/freelancing/ibridge_people'
+
+#Aliases file open
+alias zshrc='code ~/.zshrc'
+alias open='open .'
+alias aliasedit='code ~/.zshrc/dotfiles/.aliases'
+alias c='code'
+
+#Aliases Git
+alias gs='git status'
+alias ga='git add .'
+alias gc='git commit -m'
+alias gb='git branch'
+alias gk='git checkout -b'
+alias gp='git push'
+alias gpl='git pull'
+alias gm='git merge'
+alias gl='git log --oneline'
+alias gr='git reset --hard'
+
+#Aliases Rails
+alias rc='rails console'
+alias rcs='rails console --sandbox'
+alias rr='rails routes'
+alias rs='rails server'
+alias rt='rails test'
+alias seed='rails db:seed'
+alias bi='bundle install'
+alias yi='yarn install'
+alias ba='bundle add'
+alias rdm='rails db:migrate'
+alias rds='rails db:migrate:status'
+alias rdr='rails db:rollback'
+alias railsps='rails new -d postgresql'
+
+#Heroku
+alias hrrc='heroku run rails console'
+alias gph='git push heroku master'
+alias hrr='heroku run rails'
+alias hrrms='heroku run rails db:migrate db:seed'
+
+# IBridge_People
+alias launchprovit="cd ~/Work/freelancing/ibridge_people/provit && rails server"
+alias launchfrontprovit="cd ~/Work/freelancing/ibridge_people/front-provit && npm run dev"
+alias launchkeycloak="docker container start keycloak"
