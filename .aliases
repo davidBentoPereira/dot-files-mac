@@ -46,6 +46,7 @@ alias rdm='rails db:migrate'
 alias rds='rails db:migrate:status'
 alias rdr='rails db:rollback'
 alias railsps='rails new -d postgresql'
+alias fs='foreman start -f Procfile.dev'
 
 #Heroku
 alias hrrc='heroku run rails console'
@@ -53,7 +54,5 @@ alias gph='git push heroku master'
 alias hrr='heroku run rails'
 alias hrrms='heroku run rails db:migrate db:seed'
 
-# IBridge_People
-alias launchprovit="cd ~/Work/freelancing/ibridge_people/provit && rails server"
-alias launchfrontprovit="cd ~/Work/freelancing/ibridge_people/front-provit && npm run dev"
-alias launchkeycloak="docker container start keycloak"
+#Cocolis
+
