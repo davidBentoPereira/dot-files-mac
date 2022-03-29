@@ -1,18 +1,14 @@
 #Aliases basic commands
 alias ls='ls -GFh'
 alias ll='ls -las'
-alias linuxv='lsb_release -a'
-
-#Aliases advanced commands
-# > mkshortcuts : Fix made to add all snapcrafts apps as shortcuts
-alias mkshortcuts='sudo cp /var/lib/snapd/desktop/applications/* /usr/share/applications'
 
 #Aliases paths commands
 alias ..='cd ..'
 alias ...='cd ../..'
 alias work='cd ~/Work'
 alias cdfree='cd ~/Work/freelancing'
-alias cdibridge='cd ~/Work/freelancing/ibridge_people'
+alias cocoback='cd ~/Work/cocolis-api'
+alias cocofront='cd ~/Work/cocolis-fo'
 
 #Aliases file open
 alias zshrc='code ~/.zshrc'
@@ -47,6 +43,11 @@ alias rds='rails db:migrate:status'
 alias rdr='rails db:rollback'
 alias railsps='rails new -d postgresql'
 alias fs='foreman start -f Procfile.dev'
+
+#Aliases Rspec
+alias be='bundle exec'
+alias rspec='bundle exec'
+alias rspecdoc='bundle exec rspec -f d'
 
 #Heroku
 alias hrrc='heroku run rails console'
