@@ -20,7 +20,8 @@ alias gs='git status'
 alias ga='git add .'
 alias gc='git commit -m'
 alias gb='git branch'
-alias gk='git checkout -b'
+alias gck='git checkout'
+alias gkb='git checkout -b'
 alias gp='git push'
 alias gpl='git pull'
 alias gm='git merge'
@@ -41,9 +42,13 @@ alias rdc='bundle exec rails db:create'
 alias rdm='bundle exec rails db:migrate'
 alias rds='bundle exec rails db:migrate:status'
 alias rdsl='bundle exec rails db:schema:load'
-alias rdr='bundle exec rails db:rollback'
+alias rdr='bundle exec rails db:rollback:primary && bundle exec rails db:rollback:archive'
 alias railsps='bundle exec rails new -d postgresql'
 alias fs='foreman start -f Procfile.dev'
+alias cred_development='EDITOR="/Applications/RubyMine.app/Contents/MacOS/rubymine --wait" rails credentials:edit --environment development'
+alias cred_staging='EDITOR="/Applications/RubyMine.app/Contents/MacOS/rubymine --wait" rails credentials:edit --environment staging'
+alias cred_test='EDITOR="/Applications/RubyMine.app/Contents/MacOS/rubymine --wait" rails credentials:edit --environment test'
+alias cred_prod='EDITOR="/Applications/RubyMine.app/Contents/MacOS/rubymine --wait" rails credentials:edit --environment production'
 
 #Aliases Rspec
 alias be='bundle exec'
@@ -73,6 +78,15 @@ alias kill3000='kill -9 $(lsof -i:3000 -t) 2> /dev/null'
 arm='arch -arm64'
 
 reloaddb() {
+    spring stop
+    if pgrep "TablePlus" > /dev/null
+    then
+        pkill TablePlus
+        echo "TablePlus has been closed."
+    else
+        echo "TablePlus is not running."
+    fi
+
     bin/rails db:environment:set RAILS_ENV=development
     rails db:drop
     rails db:create
@@ -85,6 +99,26 @@ reloaddb() {
     rails db:migrate:status
 }
 
+reloaddbprod() {
+    if pgrep "TablePlus" > /dev/null
+    then
+        pkill TablePlus
+        echo "TablePlus has been closed."
+    else
+        echo "TablePlus is not running."
+    fi
+
+    bin/rails db:environment:set RAILS_ENV=development
+    rails db:drop
+    rails db:create
+    heroku pg:backups:download -a cocolis-api
+    pg_restore --verbose --clean --no-acl --no-owner -h localhost -d cocolis_v3_development ./latest.dump
+    rails db:migrate
+    rails data:migrate
+    DISABLE_SPRING=true bin/rails db:migrate RAILS_ENV=test
+    rails db:migrate:status
+}
+
 alias savedb='heroku pg:backups:capture --app staging-cocolis-api'
 
 dummypr() {
@@ -93,11 +127,11 @@ dummypr() {
     git pull
 
     # Checkout on the dummy branch, make a dummy commit then push
-    git checkout -b feature/CC-$1_dummy_pr
-    echo 'feature/CC-$1_dummy_pr' >> README.md
+    git checkout -b dummy/CC-$1_dummy_pr
+    echo 'dummy/CC-$1_dummy_pr' >> README.md
     git add README.md
     git commit -m "dummy commit"
-    git push --set-upstream origin feature/CC-$1_dummy_pr
+    git push --set-upstream origin dummy/CC-$1_dummy_pr
 
     # Create the Dummy PR
     gh pr create -t "CC-$1 - Dummy Pr" -b "Dummy PR"
